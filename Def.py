@@ -9,7 +9,7 @@ Created on Wed Nov 16 09:57:06 2022
 ########################################################################################################################################################################################################
 
 import urllib.request as http
-from astropy.table import Table, Column, hstack
+from astropy.table import Table, Column
 from astropy import units as u
 import numpy as np
 import matplotlib.pyplot as plt
@@ -108,7 +108,7 @@ def simbad_target_name_resolver(path, name="") :
             # VIZIER CONE SEARCH :
 ########################################################################################################################################################################################################
 
-def all_filter(lambda_list, dlambda_list, filter_list, column_list, system_list, table, flux_jsky_list, err_flux_jsky_list, tbl_):
+def all_filter(i, lambda_list, dlambda_list, filter_list, column_list, system_list, table, tbl_):
 
     lambda_list.append([])
     dlambda_list.append([])
@@ -157,9 +157,9 @@ def all_filter(lambda_list, dlambda_list, filter_list, column_list, system_list,
                 print(f"[WARNING : There are some empty data in the filter {filter_}.]\n")
                 break
                 
-    return flux_jsky_list, err_flux_jsky_list, tbl_
+    return tbl_
 
-def while_filter(lambda_list, dlambda_list, filter_list, column_list, system_list, table, flux_jsky_list, err_flux_jsky_list, tbl_, filter_choose) :
+def while_filter(lambda_list, dlambda_list, filter_list, column_list, system_list, table, tbl_, filter_choose) :
 
     lambda_list.append([])
     dlambda_list.append([])
@@ -175,11 +175,11 @@ def while_filter(lambda_list, dlambda_list, filter_list, column_list, system_lis
     except :
         print(f"[ERROR : Choose a valid number (between 0 and {len(filter_list)})]")
         column_nb = int(input(f"[Filter number {round(iteration,1)}] "))
-        filter_choose.append(column_nb)        
-        print(f"[The column {column} use the system {system} with the filter {filter_}.]")
-        lambda_, dlambda, Fmag = search_vega_filter(system, filter_)
-        flux_jsky_list = []
-        err_flux_jsky_list = []
+    filter_choose.append(column_nb)        
+    print(f"[The column {column} use the system {system} with the filter {filter_}.]")
+    lambda_, dlambda, Fmag = search_vega_filter(system, filter_)
+    flux_jsky_list = []
+    err_flux_jsky_list = []
 
     try :
         column_err = "e_"+column
@@ -215,7 +215,7 @@ def while_filter(lambda_list, dlambda_list, filter_list, column_list, system_lis
             print(f"[WARNING : There are some empty data in the filter {filter_}.]\n")
             break
                 
-    return flux_jsky_list, err_flux_jsky_list, tbl_, filter_choose
+    return tbl_, filter_choose
 
 
 
@@ -240,7 +240,7 @@ def vizier_cone_search(path, filtre_SED="",catalogue="", center_name="", radius_
     if name == '0' :
         name = "III/284/allstars"
         url = f"https://vizier.cds.unistra.fr/viz-bin/votable?-source={name}&-c={center}&-c.rm={radius}&-out.all=1"
-        System_list = ["2MASS", "2MASS", "2MASS", "Washington", "Washington", "Spitzer/IRAC", "Spitzer/IRAC", "Spitzer/IRAC", "Spitzer/IRAC", "WISE"]
+        system_list = ["2MASS", "2MASS", "2MASS", "Washington", "Washington", "Spitzer/IRAC", "Spitzer/IRAC", "Spitzer/IRAC", "Spitzer/IRAC", "WISE"]
         filter_list = ["J","H","Ks","M","T2","3.6","4.5","5.8","8.0","W2"]
         column_list = ["Jmag","Hmag","Ksmag","Mmag","T2mag","_3.6mag","_4.5mag","_5.8mag","_8.0mag","_4.5magW"]
         
@@ -257,12 +257,12 @@ def vizier_cone_search(path, filtre_SED="",catalogue="", center_name="", radius_
         if nb_filter >= len(filter_list) :
             nb_filter = len(filter_list)
             for i in range(nb_filter) :
-                flux_jsky_list, err_flux_jsky_list, tbl_ = all_filter(lambda_list, dlambda_list, filter_list, column_list, system_list, table, flux_jsky_list, err_flux_jsky_list, tbl_)
+                tbl_ = all_filter(i, lambda_list, dlambda_list, filter_list, column_list, system_list, table, tbl_)
         else :
             filter_choose = []
             iteration = 1
             while iteration < nb_filter + 0.1 :
-                flux_jsky_list, err_flux_jsky_list, tbl_, filter_choose = while_filter(lambda_list, dlambda_list, filter_list, column_list, system_list, table, flux_jsky_list, err_flux_jsky_list, tbl_, filter_choose)
+                tbl_, filter_choose = while_filter(lambda_list, dlambda_list, filter_list, column_list, system_list, table, tbl_, filter_choose)
                 iteration += 1
         
     
@@ -291,12 +291,12 @@ def vizier_cone_search(path, filtre_SED="",catalogue="", center_name="", radius_
         if nb_filter >= len(filter_list) :
             nb_filter = len(filter_list)
             for i in range(nb_filter) : 
-                flux_jsky_list, err_flux_jsky_list, tbl_ = all_filter(lambda_list, dlambda_list, filter_list, column_list, system_list, table, flux_jsky_list, err_flux_jsky_list, tbl_)
+                tbl_ = all_filter(i, lambda_list, dlambda_list, filter_list, column_list, system_list, table, tbl_)
         else :
             filter_choose = []
             iteration = 1
             while iteration < nb_filter + 0.1 :
-                flux_jsky_list, err_flux_jsky_list, tbl_, filter_choose = while_filter(lambda_list, dlambda_list, filter_list, column_list, system_list, table, flux_jsky_list, err_flux_jsky_list, tbl_, filter_choose)
+                tbl_, filter_choose = while_filter(lambda_list, dlambda_list, filter_list, column_list, system_list, table, tbl_, filter_choose)
                 iteration += 1
 
 
