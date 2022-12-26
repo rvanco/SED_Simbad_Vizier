@@ -1,0 +1,8 @@
+# %ECSV 1.0
+# ---
+# datatype:
+# - {name: 'Ra ', unit: deg, datatype: float64}
+# - {name: 'Dec ', unit: deg, datatype: float64}
+# schema: astropy-2.0
+Ra Dec
+187.99646877601998 14.42031915884
