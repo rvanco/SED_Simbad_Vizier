@@ -1,8 +1,5 @@
 # SED_Simbad_Vizier (M2 Project)
 
-
-beginabstract
-noindent 
 The project consist on making a Spectral Energy Distribution (SED) with the data gather inside multiple Vizier's catalogue.newline To be able to do that we have to go through different step, firstly we use a cython to make two function (to_jsky() and search_vega_filter() that we describe later) write in C usable by our code (in python) then we use Simbad to retrieve the Coordinates of a star giving its name (simbad_target_name_resolver()) thanks to this coordinates we make a cone search with Vizier (vizier_cone_search()), in which we take the Flux of every stars, convert there units in jansky (Jsky) (thanks to the function to_jsky() and search_vega_filter()) and lastly create our SED plot (SED()) of the region we selected.
 endabstract
 
