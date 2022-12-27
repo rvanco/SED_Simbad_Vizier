@@ -25,6 +25,22 @@ nan = float("NaN")
 ########################################################################################################################################################################################################
 
 def simbad_target_name_resolver(path, name="") :
+    """
+    Arguments :
+    
+    path (MENDATORY): Path where the result will be download
+    name (Optional) : Identifier of the target 
+    ------------------------------------------------------------------
+    Download :
+    
+    The Simbad coordinates table
+    The Simbad flux table
+    ------------------------------------------------------------------
+    Return :
+    
+    tbl_coord : Simbad Cordinnates of the target
+    tbl_flux : Simbad Flux of the target
+    """
     if name == "" :
         TARGET = input('[Object name you want to target] ')
     else :
@@ -223,6 +239,30 @@ def while_filter(lambda_list, dlambda_list, filter_list, column_list, system_lis
 
 
 def vizier_cone_search(path, filtre_SED="",catalogue="", center_name="", radius_orig="") :
+    """
+    Arguments :
+    
+    path (MENDATORY): Path where the result will be download
+    filtre_SED (Optional) : if ="all" will take all the filter, every other value will ask you how many and wich filter you want
+    catalogue (Optional) : number corresponding to the catalogue (0 ="III/284/allstars", 1="II/340/xmmom2_1", 2="II/262/batc) every other value will ask you all the information on the catalogue
+    center_name (Optional) : Identifier of the target at the center of the conesearch (will be use in simbad target resolver)
+    radius_orig (Optional) : radius of the conesearch
+    ------------------------------------------------------------------
+    Download :
+    
+    The table of simbad_target_name_resolver()
+    The Vizier flux table
+    ------------------------------------------------------------------
+    Return :
+    
+    tbl_coord : Simbad Cordinnates of the target
+    tbl_ : Vizier flux table
+    nb_filter : number of total filter selected
+    lambda_list : list of filters wavelength selected
+    dlambda_list : list of filters wavelength errorbar selected
+    radius : radius of the conesearch (==radius_orig)
+    center : Identifier of the target at the center of the conesearch (==center_name)
+    """
     if catalogue == "" :
         name = input('0 - III/284/allstars \n1 - II/340/xmmom2_1 \n2 - II/262 \nFor other, write the name \n[number of the catalogue] ')
     else :
@@ -460,6 +500,23 @@ def plot(nb_filter, tbl_, lambda_list) :
             print(f"[WARNING : There is no value for {tbl_.keys()[2*j+3]}.]")
 
 def SED(path, nb_catalogue=0) :
+    """
+    Arguments :
+    
+    path (MENDATORY): Path where the result will be download
+    nb_catalogue (Optionnal) : number of catalogue used in the SED (0 will use "III/284/allstars", 1 will use "III/284/allstars" and "II/340/xmmom2_1", 2 will use the two previous and "II/262/batc")
+    ------------------------------------------------------------------
+    Download :
+    
+    The table of simbad_target_name_resolver()
+    The table of vizier_cone_search()
+    The conesearch graphic
+    The SED graphic
+    ------------------------------------------------------------------
+    Return :
+    
+    nothing
+    """
     list_cata = ["III/284/allstars","II/340/xmmom2_1","II/262/batc"]
     error_bar = input("[Do you want to display the error bar in the SED plot ? (y/n)] ")
     while error_bar != "y" and error_bar != "n" :
