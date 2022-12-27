@@ -1,12 +1,21 @@
 # SED_Simbad_Vizier (M2 Project)
 
-The project consist on making a Spectral Energy Distribution (SED) with the data gather inside multiple Vizier's catalogue.newline To be able to do that we have to go through different step, firstly we use a cython to make two function (to_jsky() and search_vega_filter() that we describe later) write in C usable by our code (in python) then we use Simbad to retrieve the Coordinates of a star giving its name (simbad_target_name_resolver()) thanks to this coordinates we make a cone search with Vizier (vizier_cone_search()), in which we take the Flux of every stars, convert there units in jansky (Jsky) (thanks to the function to_jsky() and search_vega_filter()) and lastly create our SED plot (SED()) of the region we selected.
+The project consist on making a Spectral Energy Distribution (SED) with the data gather inside multiple Vizier's catalogue.
+
+To be able to do that we have to go through different step, firstly we use a cython to make two function (to_jsky() and search_vega_filter() that we describe later) write in C usable by our code (in python) then we use Simbad to retrieve the Coordinates of a star giving its name (simbad_target_name_resolver()) thanks to this coordinates we make a cone search with Vizier (vizier_cone_search()), in which we take the Flux of every stars, convert there units in jansky (Jsky) (thanks to the function to_jsky() and search_vega_filter()) and lastly create our SED plot (SED()) of the region we selected.
 endabstract
 
 ## Running the code :
-To run the code you need to compile the cython file (cython_code.pyx) thanks to setup.py, and then execute the exe.py without modifying it, all the information needed will be ask as a form of input, in every input if the option are display like a list of numbered answer only the number corresponding to the choice is asked.newline Firstly the prompt will ask the user if he want to run all the questions or to choose a specific question :newline If the user decide to run all the questions he will go through : Simbad target resolver that only uses simbad_target_name_resolver(), then Vizier cone search that uses vizier_cone_search() inside which simbad_target_name_resolver() is used and finally the SED (Using Vizier and Simbad) that uses the SED() inside which vizier_cone_search() is used.
-If he want to choose a specific one he will be asked which part of the code he wants to use.newline
+To run the code you need to compile the cython file (cython_code.pyx) thanks to setup.py, and then execute the exe.py without modifying it, all the information needed will be ask as a form of input, in every input if the option are display like a list of numbered answer only the number corresponding to the choice is asked.
+
+Firstly the prompt will ask the user if he want to run all the questions or to choose a specific question :
+
+If the user decide to run all the questions he will go through : Simbad target resolver that only uses simbad_target_name_resolver(), then Vizier cone search that uses vizier_cone_search() inside which simbad_target_name_resolver() is used and finally the SED (Using Vizier and Simbad) that uses the SED() inside which vizier_cone_search() is used.
+If he want to choose a specific one he will be asked which part of the code he wants to use.
+
+
 Depending on the answer the prompt will ask different information with instructions to follow on how to enter them.
+
 ## Function Description :
 ### Executable :
 The executable (exe.py) is design to let the user choose the function he want to use and let him input his choice.
@@ -23,7 +32,9 @@ The definition (Def.py) code is where every function is define.
 #### vizier_cone_search(path,filter_SED,catalogue,center_name,radius)
 Only three catalogues can be used in these code ("III/284/allstars", "II/340/xmmom2_1", "II/262/batc"). It's a strong restriction on the wavelength of the filter.
 ### Possible bug :
-When a list of choice is given (e.g. 0 : Jmag, 1 : Hmag, 2 : Ksmag...) you just have to type the number corresponding to your choice and not the name of it.newline Other mistake (choosing twice the same filter, giving a number of filter that does not exist...) should be handle in the code and giving you again the choice with a remark on the mistake.
+When a list of choice is given (e.g. 0 : Jmag, 1 : Hmag, 2 : Ksmag...) you just have to type the number corresponding to your choice and not the name of it.
+
+Other mistake (choosing twice the same filter, giving a number of filter that does not exist...) should be handle in the code and giving you again the choice with a remark on the mistake.
 
 #### simbad_target_name_resolver(path, name)
 The name given must be the identifier of the object and can't be a coordinate in the sky.
