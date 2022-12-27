@@ -478,7 +478,7 @@ def SED(path, nb_catalogue=0) :
         plt.scatter(tbl_["Ra"], tbl_["De"], s=5)
         
     rac_origin, deg_origin = coord_origin["Ra "], coord_origin["Dec "]
-    plt.scatter(rac_origin, deg_origin, c='red', label="Central star")
+    plt.scatter(rac_origin, deg_origin, c='red', label=f"{center_name}")
 
     plt.xlabel("Right Ascension (degres)")
     plt.ylabel("Declinaison (degres)")
@@ -486,7 +486,7 @@ def SED(path, nb_catalogue=0) :
     plt.title(f"Conesearch {radius_conesearch}arcmin \n around {center_name}", fontsize=20)
     plt.legend()
     
-    plt.savefig(f"{path}Coordinate.png")
+    plt.savefig(f"{path}Conesearch.png")
     
     print("\n\nSED : \n\n")
     plt.figure()
