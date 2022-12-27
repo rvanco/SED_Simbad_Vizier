@@ -40,6 +40,6 @@ the center name is used in the simbad_target_name_resolver() so it also must be 
 All your result will be store in the folder result, CAUTION : the previous result will be replace by the new one each time you execute the code.
 
 ![Screenshot](result/Conesearch.png)
-![alt text](https://github.com/rvanco/SED_Simbad_Vizier/blob/result/SED.png?raw=true)
+![Screenshot](esult/SED.png)
 
 Three table, the coordinates of the central star the flux given by simbad and the flux given by vizier, are also download in the result folder as .ecsv so you can use the value as you like later.
